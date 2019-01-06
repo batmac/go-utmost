@@ -24,8 +24,8 @@ func TestUtmostBasic(t *testing.T) {
 		t.Fail()
 	}
 	tm.Wait()
-
 }
+
 func TestUtmostNegative(t *testing.T) {
 	tm := utmost.New(-1)
 	if tm.Limit() != utmost.DefaultUtmost {
@@ -42,7 +42,7 @@ func launchDummy(tb testing.TB, nbTotal, nbLimit, maxTime int) *utmost.TicketsMa
 	}
 	for i := 0; i < nbTotal; i++ {
 		tm.Go(func() {
-			time.Sleep(time.Duration(rand.Intn(maxTime)) * time.Millisecond)
+			time.Sleep(time.Duration(maxTime) * time.Millisecond)
 		})
 	}
 	if tm.Dispensed() != nbTotal {
@@ -57,22 +57,22 @@ func launchDummy(tb testing.TB, nbTotal, nbLimit, maxTime int) *utmost.TicketsMa
 }
 
 func TestUtmostMany(t *testing.T) {
-	_ = launchDummy(t, rand.Intn(8000), rand.Intn(8000), rand.Intn(1000))
+	rand.Seed(time.Now().UnixNano())
+	_ = launchDummy(t, rand.Intn(8000), rand.Intn(8000), rand.Intn(100))
 }
 
 func TestUtmostManyManyTimes(t *testing.T) {
 	if testing.Short() {
 		t.Skip("skipping test in short mode.")
 	}
-	loop := 10
-	for i := 0; i < loop; i++ {
+	for i := 0; i < 100; i++ {
 		TestUtmostMany(t)
 	}
 }
 
 func BenchmarkUtmost(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		tm := launchDummy(b, b.N, b.N/2, 10)
+		tm := launchDummy(b, b.N, b.N/3, 10)
 		b.StopTimer()
 		tm.Wait()
 		b.StartTimer()
