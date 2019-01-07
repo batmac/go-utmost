@@ -1,2 +1,2 @@
 # go-utmost
-limit the number of simultaneous goroutines
+limit the number of simultaneous goroutines with some observability.
