@@ -1,0 +1,21 @@
+sudo: false
+language: go
+
+go:
+  - "1.x"
+  - "1.11.x"
+  - "1.10.x"
+  - "1.7"
+  - master
+
+os:
+  - linux
+  - osx
+  - windows
+
+script: go test -v ./...
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - go: master
