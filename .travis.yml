@@ -13,9 +13,14 @@ os:
   - osx
   - windows
 
-script: go test -v ./...
+script:
+  - go test -v ./...
+  - go test -race -coverprofile=coverage.txt -covermode=atomic
 
 matrix:
   fast_finish: true
   allow_failures:
     - go: master
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
