@@ -10,15 +10,22 @@ const (
 	DefaultUtmost = 100
 )
 
-// TicketsMachine is our base type
-type TicketsMachine struct {
-	dispenser chan int
-	limit     int
+// Telemetry contains vars used for observability only
+// structcheck doesn't handle embedded structs yet.
+//nolint:structcheck
+type telemetry struct {
 	dispensed int
 	inUse     int
 	maxInUse  int
-	wg        sync.WaitGroup
 	m         sync.RWMutex
+}
+
+// TicketsMachine is our base type
+type TicketsMachine struct {
+	telemetry
+	dispenser chan int
+	limit     int
+	wg        sync.WaitGroup
 }
 
 // Wait blocks until the WaitGroup counter is zero.
