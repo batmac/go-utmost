@@ -1,4 +1,4 @@
-// Package utmost lets you limit the number of simultaneous goroutines with some observability.
+// Package utmost lets you limit the number of simultaneous goroutines, with some observability.
 package utmost
 
 import (
