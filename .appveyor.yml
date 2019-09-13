@@ -9,9 +9,13 @@ build: off
 test_script:
 - sh: >-
     printenv
+    
     go version
+    
     go list -m all
+    
     go vet ./...
+    
     go test -v ./...
 deploy: off
 notifications:
