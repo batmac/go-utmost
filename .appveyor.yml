@@ -12,8 +12,6 @@ test_script:
     
     go version
     
-    go list -m all
-    
     go vet ./...
     
     go test -v ./...
